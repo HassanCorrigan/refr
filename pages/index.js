@@ -77,13 +77,17 @@ const Index = () => {
           <input className={styles.button} type="submit" value="Shorten It" />
         </form>
 
-        {loading && <p>Loading...</p>}
+        {loading && (
+          <div className={styles.loading}>
+            <p>Creating Link...</p>
+          </div>
+        )}
         {message && (
-          <div>
+          <div className={styles.linkDetails}>
             <p>{message}</p>
-            <p>{url}</p>
+            <p>Your link: {url}</p>
             <p>
-              {process.env.NEXT_PUBLIC_WEBSITE_URL}/{shortCode}
+              Your new shortlink: {process.env.NEXT_PUBLIC_WEBSITE_URL}/{shortCode}
             </p>
           </div>
         )}

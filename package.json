@@ -1,6 +1,6 @@
 {
   "name": "refr",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A link shortening service built on Next JS",
   "main": "index.js",
   "scripts": {
