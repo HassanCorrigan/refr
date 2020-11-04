@@ -1,32 +1,85 @@
+/* Landing section */
+.landing {
+  text-align: center;
+  padding: 4em 1em 1em 1em;
+}
+.bigText {
+  font-size: 1.5rem;
+  font-family: 'Rubik', sans-serif;
+  margin: 0.3em 0;
+  font-weight: 500;
+}
+.brand {
+  color: var(--primary-color);
+}
+
+/* Shortener section */
+.shortener {
+  padding: 1em;
+}
 .form {
-  width: 100%;
-  max-width: 500px;
-  padding: 10px;
-  margin: auto;
+  max-width: 750px;
+  padding: 1em;
+  margin: 2em auto;
+  background-color: white;
+  border-radius: var(--border-radius);
 }
 .url,
-.shortcode {
+.shortcode,
+.button {
   width: 100%;
-  margin: 10px 0;
   font-size: 1rem;
-  padding: 3px;
-  border: 1px solid var(--main-color);
-  border-radius: 5px;
+  font-family: 'Roboto Mono', monospace;
+  font-weight: 300;
   color: var(--main-color);
   background-color: var(--main-background-color);
-  border: 1px solid var(--main-color);
+  margin: 1em 0;
+  padding: 0.5em 0.8em;
+  border: none;
+  border-radius: var(--border-radius);
+  outline: none;
 }
 .shortcode {
-  width: initial;
+  width: 9em;
   margin-left: 2px;
 }
 .button {
-  font-size: 1rem;
-  padding: 3px;
-  background: transparent;
-  color: var(--main-color);
-  border: 1px solid var(--main-color);
-  border-radius: 5px;
+  width: auto;
   display: block;
   cursor: pointer;
+  font-weight: 500;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  color: var(--primary-color);
+}
+
+/* Shortcuts section */
+.shortcuts {
+  padding: 1em;
+  text-align: center;
+}
+.iconLink {
+  display: flex;
+  place-content: center;
+  align-items: center;
+  margin: 1em auto;
+}
+.iconLink > * {
+  margin: 0 1em;
+}
+
+@media only screen and (min-width: 750px) {
+  .landing {
+    padding: 5em 0;
+  }
+  .bigText {
+    font-size: 2rem;
+    margin: 0.6em 0;
+  }
+  .form {
+    margin: 5em auto;
+  }
+  .shortcuts {
+    margin: 5em 0;
+  }
 }

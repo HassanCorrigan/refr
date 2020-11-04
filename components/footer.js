@@ -4,7 +4,7 @@ import packageJSON from '../package.json';
 const Footer = () => {
   return (
     <footer className={styles.footer}>
-      <p>Link Shortener - v{packageJSON.version}</p>
+      <p>Refr - v{packageJSON.version}</p>
     </footer>
   );
 };

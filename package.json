@@ -1,6 +1,6 @@
 {
   "name": "refr",
-  "version": "0.9.0",
+  "version": "1.0.0",
   "description": "A link shortening service built on Next JS",
   "main": "index.js",
   "scripts": {
@@ -17,7 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "mongodb": "^3.6.2",
-    "next": "^10.0.0",
+    "next": "^10.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "yup": "^0.29.3"
