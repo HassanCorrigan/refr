@@ -58,6 +58,8 @@
   background-color: var(--primary-color);
   border-radius: var(--border-radius);
   padding: 1em;
+  max-width: 750px;
+  margin: auto;
 }
 .linkDetails p {
   margin: 0.5em 0;
