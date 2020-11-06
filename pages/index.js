@@ -22,15 +22,14 @@ const Index = () => {
     const isValid = await validate(url, short_code);
 
     if (isValid) {
-      createLink(url, short_code);
-      clearForm(e);
+      createLink(url, short_code, e);
     } else {
       setMessage('Please enter a valid URL');
       setLoading(false);
     }
   };
 
-  const createLink = async (url, short_code) => {
+  const createLink = async (url, short_code, e) => {
     try {
       const res = await fetch('/api/shorten', {
         method: 'POST',
@@ -40,8 +39,16 @@ const Index = () => {
         body: JSON.stringify({ url, short_code }),
       });
       const data = await res.json();
-      setMessage(data.message);
-      setShortCode(data.shortCode);
+
+      if (res.status === 200) {
+        setMessage(data.message);
+        setShortCode(data.shortCode);
+        clearForm(e);
+      } else {
+        setMessage(data.message);
+        setShortCode(null);
+      }
+
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -84,7 +91,10 @@ const Index = () => {
           {message && <p>{message}</p>}
           {shortCode && (
             <p>
-              Your new shortlink: {process.env.NEXT_PUBLIC_WEBSITE_URL}/{shortCode}
+              Your new shortlink:{' '}
+              <b>
+                {process.env.NEXT_PUBLIC_WEBSITE_URL}/{shortCode}
+              </b>
             </p>
           )}
         </div>
