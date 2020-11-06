@@ -5,7 +5,6 @@ import validate from '../utils/validator.js';
 import styles from '../styles/index.module.css';
 
 const Index = () => {
-  const [url, setUrl] = useState('');
   const [shortCode, setShortCode] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -23,31 +22,29 @@ const Index = () => {
     const isValid = await validate(url, short_code);
 
     if (isValid) {
-      fetch('/api/shorten', {
+      createLink(url, short_code);
+      clearForm(e);
+    } else {
+      setMessage('Please enter a valid URL');
+      setLoading(false);
+    }
+  };
+
+  const createLink = async (url, short_code) => {
+    try {
+      const res = await fetch('/api/shorten', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ url, short_code }),
-      })
-        .then((res) => {
-          if (res.status === 200) {
-            clearForm(e);
-          }
-          return res.json();
-        })
-        .then((data) => {
-          setUrl(data.url);
-          setShortCode(data.shortCode);
-          setMessage(data.message);
-          setLoading(false);
-        })
-        .catch((error) => console.log(error));
-    } else {
-      setUrl(url);
-      setShortCode(short_code);
-      setMessage('Please enter a valid URL');
+      });
+      const data = await res.json();
+      setMessage(data.message);
+      setShortCode(data.shortCode);
       setLoading(false);
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -82,21 +79,21 @@ const Index = () => {
             <p>Creating Link...</p>
           </div>
         )}
-        {message && (
-          <div className={styles.linkDetails}>
-            <p>{message}</p>
-            <p>Your link: {url}</p>
+
+        <div className={styles.linkDetails}>
+          {message && <p>{message}</p>}
+          {shortCode && (
             <p>
               Your new shortlink: {process.env.NEXT_PUBLIC_WEBSITE_URL}/{shortCode}
             </p>
-          </div>
-        )}
+          )}
+        </div>
       </section>
       <section className={styles.shortcuts}>
         <p>Add the shortcut to iOS to generate short links from the share menu.</p>
         <div>
           <a className={styles.iconLink} href="https://www.icloud.com/shortcuts/f9d6fe3a35df4272a7253900bd75e779">
-            <Image src="/ios-shortcuts.png" alt="Apple shortcuts app icon" width={75} height={75} />
+            <Image src="/img/ios-shortcuts.png" alt="Apple shortcuts app icon" width={75} height={75} />
             <p>Add the iOS shortcut</p>
           </a>
         </div>

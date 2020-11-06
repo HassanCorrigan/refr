@@ -21,13 +21,12 @@ export default async function handler(req, res) {
       res.end(
         JSON.stringify({
           message: 'Please enter a correct URL and Short Code',
-          url,
           shortCode,
         })
       );
     }
   } else {
-    res.redirect(301, '/');
+    res.redirect(301, '/'); // Redirect all other request other than POST
   }
 }
 
@@ -46,9 +45,7 @@ async function createLink(url, short_code) {
     return {
       statusCode: 403,
       data: {
-        message: 'Short code already exists',
-        url: alreadyExists.url,
-        shortCode: alreadyExists.shortCode,
+        message: 'Sorry, your chosen short code already exists',
       },
     };
   } else {
@@ -57,7 +54,6 @@ async function createLink(url, short_code) {
       statusCode: 200,
       data: {
         message: 'Link created successfully',
-        url,
         shortCode,
       },
     };

@@ -57,12 +57,11 @@
   color: var(--secondary-background-color);
   background-color: var(--primary-color);
   border-radius: var(--border-radius);
-  padding: 1em;
   max-width: 750px;
   margin: auto;
 }
 .linkDetails p {
-  margin: 0.5em 0;
+  padding: 1em;
 }
 
 /* Shortcuts section */
@@ -98,16 +97,16 @@
 
 @media only screen and (min-width: 750px) {
   .landing {
-    padding: 3em 0;
+    padding: 2em 0;
   }
   .bigText {
     font-size: 2rem;
     margin: 0.6em 0;
   }
   .form {
-    margin: 3em auto;
+    margin: 2em auto;
   }
   .shortcuts {
-    margin: 3em 0;
+    margin: 2em 0;
   }
 }

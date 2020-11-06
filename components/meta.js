@@ -15,13 +15,13 @@ const Meta = () => {
       <meta property="og:url" content="https://refr.xyz/" />
       <meta property="og:title" content="Refr - link shortener" />
       <meta property="og:description" content="A free and simple link shortening service with custom URLs." />
-      <meta property="og:image" content="https://refr.xyz/opengraph-twiiter-card.jpg" />
+      <meta property="og:image" content="https://refr.xyz/img/opengraph-twiiter-card.jpg" />
 
       <meta property="twitter:card" content="summary_large_image" />
       <meta property="twitter:url" content="https://refr.xyz/" />
       <meta property="twitter:title" content="Refr - link shortener" />
       <meta property="twitter:description" content="A free and simple link shortening service with custom URLs." />
-      <meta property="twitter:image" content="https://refr.xyz/opengraph-twiiter-card.jpg" />
+      <meta property="twitter:image" content="https://refr.xyz/img/opengraph-twiiter-card.jpg" />
 
       <title>Refr - link shortener</title>
     </Head>
