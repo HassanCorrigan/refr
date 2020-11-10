@@ -3,7 +3,7 @@ const { MongoClient } = require('mongodb');
 // Connect to DB
 const dbConnect = async () => {
   // Setup DB
-  const dbUri = process.env.DB_URI;
+  const dbUri = process.env.MONGO_URL;
   const client = new MongoClient(dbUri, { useUnifiedTopology: true });
 
   return await client.connect();
