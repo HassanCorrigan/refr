@@ -20,6 +20,6 @@ $ npm run start
 Required .env: A MongoDB connection string and website url.
 
 ```.sh
-DB_URI=mongodb+srv://user:pass@cluster/db
+MONGO_URL=mongodb+srv://user:pass@cluster/db
 NEXT_PUBLIC_WEBSITE_URL=https://yourwebsiteurl.com
 ```
