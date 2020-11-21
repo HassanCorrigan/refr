@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Image from 'next/image';
 import Layout from '../components/layout.js';
 import validate from '../utils/validator.js';
 import styles from '../styles/index.module.css';
@@ -102,8 +101,8 @@ const Index = () => {
       <section className={styles.shortcuts}>
         <p>Add the shortcut to iOS to generate short links from the share menu.</p>
         <div>
-          <a className={styles.iconLink} href="https://www.icloud.com/shortcuts/f9d6fe3a35df4272a7253900bd75e779">
-            <Image src="/img/ios-shortcuts.png" alt="Apple shortcuts app icon" width={75} height={75} />
+          <a className={styles.iconLink} href="https://www.icloud.com/shortcuts/f9d6fe3a35df4272a7253900bd75e779" target="_blank" rel="noopener noreferrer">
+            <img src="/img/ios-shortcuts.png" alt="Apple shortcuts app icon" />
             <p>Add the iOS shortcut</p>
           </a>
         </div>

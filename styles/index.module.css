@@ -70,10 +70,14 @@
   text-align: center;
 }
 .iconLink {
-  display: flex;
+  display: inline-flex;
   place-content: center;
   align-items: center;
   margin: 1em auto;
+}
+.iconLink img {
+  width: 5em;
+  height: auto;
 }
 .iconLink > * {
   margin: 0 1em;
@@ -84,9 +88,9 @@
   font-size: 1.5rem;
   font-weight: 500;
   background-color: rgba(211, 211, 211, 0.9);
-  width: 100vw;
-  height: 100vh;
-  position: absolute;
+  width: 100%;
+  height: 100%;
+  position: fixed;
   top: 0;
   left: 0;
   z-index: 1;

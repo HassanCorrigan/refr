@@ -1,4 +1,6 @@
 .footer {
   padding: 2em 1em;
   background-color: var(--secondary-background-color);
+  display: flex;
+  justify-content: space-between;
 }

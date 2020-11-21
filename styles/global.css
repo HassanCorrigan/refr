@@ -2,10 +2,11 @@
 
 :root {
   --main-color: #2c2a30;
-  --main-background-color: #ecf0f4;
+  --main-background-color: #edf1f5;
   --secondary-background-color: #ffffff;
-  --primary-color: #190fdf;
+  --primary-color: #180edb;
   --border-radius: 1.2em;
+  --shadow-color: #dbdee0;
 }
 * {
   margin: 0;
