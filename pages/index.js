@@ -8,7 +8,7 @@ const Index = () => {
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async e => {
     e.preventDefault();
     e.persist();
 
@@ -54,9 +54,19 @@ const Index = () => {
     }
   };
 
-  const clearForm = (e) => {
+  const clearForm = e => {
     e.target.url.value = '';
     e.target.short_code.value = '';
+  };
+
+  const handleCopy = e => {
+    const link =
+      process.env.NEXT_PUBLIC_WEBSITE_URL + '/' + shortCode.toString();
+    navigator.clipboard.writeText(link);
+    e.target.src = '/img/copy-success.svg';
+    setTimeout(() => {
+      e.target.src = '/img/copy-glyph.svg';
+    }, 5000);
   };
 
   return (
@@ -74,10 +84,21 @@ const Index = () => {
       </section>
       <section className={styles.shortener}>
         <form className={styles.form} onSubmit={handleSubmit}>
-          <input className={styles.url} type="url" name="url" placeholder="https://www.example.com" required />
+          <input
+            className={styles.url}
+            type='url'
+            name='url'
+            placeholder='https://www.example.com'
+            required
+          />
           <span>{process.env.NEXT_PUBLIC_WEBSITE_URL}/</span>
-          <input className={styles.shortcode} type="text" name="short_code" placeholder="short-code" />
-          <input className={styles.button} type="submit" value="Shorten It" />
+          <input
+            className={styles.shortcode}
+            type='text'
+            name='short_code'
+            placeholder='short-code'
+          />
+          <input className={styles.button} type='submit' value='Shorten It' />
         </form>
 
         {loading && (
@@ -87,22 +108,37 @@ const Index = () => {
         )}
 
         <div className={styles.linkDetails}>
+          {shortCode && (
+            <img
+              src='img/copy-glyph.svg'
+              onClick={handleCopy}
+              title='Copy to clipboard'
+            />
+          )}
           {message && <p>{message}</p>}
           {shortCode && (
             <p>
               Your new shortlink:{' '}
               <b>
-                {process.env.NEXT_PUBLIC_WEBSITE_URL}/{shortCode}
+                <a href={`${process.env.NEXT_PUBLIC_WEBSITE_URL}/${shortCode}`}>
+                  {process.env.NEXT_PUBLIC_WEBSITE_URL}/{shortCode}
+                </a>
               </b>
             </p>
           )}
         </div>
       </section>
       <section className={styles.shortcuts}>
-        <p>Add the shortcut to iOS to generate short links from the share menu.</p>
+        <p>
+          Add the shortcut to iOS to generate short links from the share menu.
+        </p>
         <div>
-          <a className={styles.iconLink} href="https://www.icloud.com/shortcuts/f9d6fe3a35df4272a7253900bd75e779" target="_blank" rel="noopener noreferrer">
-            <img src="/img/ios-shortcuts.png" alt="Apple shortcuts app icon" />
+          <a
+            className={styles.iconLink}
+            href='https://www.icloud.com/shortcuts/f9d6fe3a35df4272a7253900bd75e779'
+            target='_blank'
+            rel='noopener noreferrer'>
+            <img src='/img/ios-shortcuts.png' alt='Apple shortcuts app icon' />
             <p>Add the iOS shortcut</p>
           </a>
         </div>

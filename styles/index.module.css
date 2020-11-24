@@ -60,8 +60,22 @@
   max-width: 750px;
   margin: auto;
 }
+.linkDetails img {
+  width: 1.2em;
+  height: auto;
+  float: right;
+  margin: 0.7em;
+  cursor: pointer;
+  transition: 0.5s all;
+}
+.linkDetails img:hover {
+  filter: brightness(0.8);
+}
 .linkDetails p {
   padding: 1em;
+}
+.linkDetails a {
+  color: var(--main-background-color);
 }
 
 /* Shortcuts section */
