@@ -9,9 +9,10 @@ const dbConnect = async () => {
   return await client.connect();
 };
 
-const findOne = async (shortCode) => {
+const findOne = async shortCode => {
   const client = await dbConnect();
-  const links = client.db('link-db').collection('links');
+  const dbName = process.env.DB_NAME;
+  const links = client.db(dbName).collection('links');
 
   try {
     return await links.findOne({ shortCode });
@@ -20,9 +21,10 @@ const findOne = async (shortCode) => {
   }
 };
 
-const insertOne = async (record) => {
+const insertOne = async record => {
   const client = await dbConnect();
-  const links = client.db('link-db').collection('links');
+  const dbName = process.env.DB_NAME;
+  const links = client.db(dbName).collection('links');
 
   try {
     return await links.insertOne(record);
