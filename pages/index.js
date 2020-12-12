@@ -24,6 +24,7 @@ const Index = () => {
       createLink(url, short_code, e);
     } else {
       setMessage('Please enter a valid URL');
+      setShortCode(null);
       setLoading(false);
     }
   };
@@ -88,6 +89,7 @@ const Index = () => {
             className={styles.url}
             type='url'
             name='url'
+            aria-label='URL'
             placeholder='https://www.example.com'
             required
           />
@@ -96,6 +98,7 @@ const Index = () => {
             className={styles.shortcode}
             type='text'
             name='short_code'
+            aria-label='Short Code'
             placeholder='short-code'
           />
           <input className={styles.button} type='submit' value='Shorten It' />
