@@ -48,10 +48,10 @@ const Index = () => {
         setMessage(data.message);
         setShortCode(null);
       }
-
-      setLoading(false);
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -63,8 +63,10 @@ const Index = () => {
   const handleCopy = e => {
     const link =
       process.env.NEXT_PUBLIC_WEBSITE_URL + '/' + shortCode.toString();
+
     navigator.clipboard.writeText(link);
     e.target.src = '/img/copy-success.svg';
+
     setTimeout(() => {
       e.target.src = '/img/copy-glyph.svg';
     }, 5000);
