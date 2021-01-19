@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import Layout from '../components/layout.js';
-import validate from '../utils/validator.js';
-import styles from '../styles/index.module.css';
+import Layout from 'components/Layout';
+import validate from 'utils/validator';
+import checkForUrlConflicts from 'utils/url';
+import styles from 'styles/index.module.css';
 
 const Index = () => {
   const [shortCode, setShortCode] = useState('');
@@ -19,14 +20,23 @@ const Index = () => {
 
     // Validate client input
     const isValid = await validate(url, short_code);
-
-    if (isValid) {
-      createLink(url, short_code, e);
-    } else {
+    if (!isValid) {
       setMessage('Please enter a valid URL');
       setShortCode(null);
       setLoading(false);
+      return;
     }
+
+    // Return error if URLs match
+    const conflicts = await checkForUrlConflicts(url, shortCode);
+    if (conflicts) {
+      setMessage('The source URL and destination URL cannot be equal');
+      setShortCode(null);
+      setLoading(false);
+      return;
+    }
+
+    createLink(url, short_code, e);
   };
 
   const createLink = async (url, short_code, e) => {

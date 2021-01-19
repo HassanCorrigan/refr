@@ -1,12 +1,12 @@
-import styles from '../styles/header.module.css';
+import styles from 'styles/header.module.css';
 
 const Header = () => {
   return (
     <header className={styles.header}>
-      <a href="/">
+      <a href='/'>
         <h1>
           <span className={styles.logo}>Refr</span>.xyz
-      </h1>
+        </h1>
       </a>
     </header>
   );

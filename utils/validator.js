@@ -1,6 +1,6 @@
 import { string, object } from 'yup';
 
-const validate = (url, shortCode) => {
+const validate = async (url, shortCode) => {
   const schema = object().shape({
     url: string().url().min(11).max(2000).trim().required(),
     shortCode: string().max(2000).trim(),
@@ -11,8 +11,8 @@ const validate = (url, shortCode) => {
       url,
       shortCode,
     })
-    .then((valid) => valid)
-    .catch((error) => {
+    .then(valid => valid)
+    .catch(error => {
       console.log(error.name, error.errors);
     });
 };

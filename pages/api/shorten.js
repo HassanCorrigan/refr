@@ -1,5 +1,6 @@
-import { findOne, insertOne } from '../../config/db.js';
-import validate from '../../utils/validator.js';
+import { findOne, insertOne } from 'config/db';
+import validate from 'utils/validator';
+import checkForUrlConflicts from 'utils/url';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -8,15 +9,7 @@ export default async function handler(req, res) {
 
     // Validate server input
     const isValid = await validate(url, shortCode);
-
-    if (isValid) {
-      createLink(url, shortCode)
-        .then((response) => {
-          res.statusCode = response.statusCode;
-          res.end(JSON.stringify(response.data));
-        })
-        .catch(console.dir);
-    } else {
+    if (!isValid) {
       res.statusCode = 400;
       res.end(
         JSON.stringify({
@@ -24,6 +17,27 @@ export default async function handler(req, res) {
           shortCode,
         })
       );
+    }
+
+    // Return error if URLs match
+    const conflicts = await checkForUrlConflicts(url, shortCode);
+    if (conflicts) {
+      res.statusCode = 400;
+      res.end(
+        JSON.stringify({
+          message: 'The source URL and destination URL cannot be equal',
+          shortCode,
+        })
+      );
+    }
+
+    // If both previous checks pass, create the link
+    try {
+      const response = await createLink(url, shortCode);
+      res.statusCode = response.statusCode;
+      res.end(JSON.stringify(response.data));
+    } catch (error) {
+      console.error(error);
     }
   } else {
     res.redirect(301, '/'); // Redirect all other request other than POST
