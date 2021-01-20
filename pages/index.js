@@ -28,9 +28,9 @@ const Index = () => {
     }
 
     // Return error if URLs match
-    const conflicts = await checkForUrlConflicts(url, shortCode);
+    const conflicts = await checkForUrlConflicts(url);
     if (conflicts) {
-      setMessage('The source URL and destination URL cannot be equal');
+      setMessage("You aren't permitted to redirect to this website");
       setShortCode(null);
       setLoading(false);
       return;
@@ -71,8 +71,9 @@ const Index = () => {
   };
 
   const handleCopy = e => {
-    const link =
-      process.env.NEXT_PUBLIC_WEBSITE_URL + '/' + shortCode.toString();
+    const link = `${
+      process.env.NEXT_PUBLIC_WEBSITE_URL
+    }/${shortCode.toString()}`;
 
     navigator.clipboard.writeText(link);
     e.target.src = '/img/copy-success.svg';

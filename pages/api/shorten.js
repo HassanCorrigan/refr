@@ -17,18 +17,20 @@ export default async function handler(req, res) {
           shortCode,
         })
       );
+      return;
     }
 
     // Return error if URLs match
-    const conflicts = await checkForUrlConflicts(url, shortCode);
+    const conflicts = await checkForUrlConflicts(url);
     if (conflicts) {
       res.statusCode = 400;
       res.end(
         JSON.stringify({
-          message: 'The source URL and destination URL cannot be equal',
+          message: "You aren't permitted to redirect to this website",
           shortCode,
         })
       );
+      return;
     }
 
     // If both previous checks pass, create the link
@@ -40,7 +42,7 @@ export default async function handler(req, res) {
       console.error(error);
     }
   } else {
-    res.redirect(301, '/'); // Redirect all other request other than POST
+    res.redirect(301, '/'); // Redirect all requests other than POST
   }
 }
 
