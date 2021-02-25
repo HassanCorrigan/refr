@@ -1,5 +1,7 @@
 # Refr - link shortening serivce
 
+![Refr Promo Image](/public/img/opengraph-twitter-card.jpg 'Refr Promo Image')
+
 Built with NextJS and hosted on Vercel. A modern and simple link shortener, with support for custom links (shortcodes) and randomly generated urls.
 
 A database MongoDB URI and website URL are required. Place both in a .env file and use the following commands to build and run the application.
