@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Layout from 'components/Layout';
 import validate from 'utils/validator';
-import checkForUrlConflicts from 'utils/url';
+import { checkForUrlConflicts, checkForMaliciousURL } from 'utils/url';
 import styles from 'styles/index.module.css';
 
 const Index = () => {
@@ -19,8 +19,8 @@ const Index = () => {
     const short_code = e.target.short_code.value;
 
     // Validate client input
-    const isValid = await validate(url, short_code);
-    if (!isValid) {
+    const valid = await validate(url, short_code);
+    if (!valid) {
       setMessage('Please enter a valid URL');
       setShortCode(null);
       setLoading(false);
@@ -30,7 +30,20 @@ const Index = () => {
     // Return error if URLs match
     const conflicts = await checkForUrlConflicts(url);
     if (conflicts) {
-      setMessage("You aren't permitted to redirect to this website");
+      setMessage(
+        "We couldn't create your shortlink: You aren't allowed to create a redirect to this website."
+      );
+      setShortCode(null);
+      setLoading(false);
+      return;
+    }
+
+    // Return error if URLs is malicious
+    const malicious = await checkForMaliciousURL(url);
+    if (malicious) {
+      setMessage(
+        "We couldn't create your shortlink: The link you provided is untrusted and may contain malware."
+      );
       setShortCode(null);
       setLoading(false);
       return;

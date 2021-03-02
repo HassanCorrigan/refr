@@ -1,6 +1,6 @@
 import { findOne, insertOne } from 'config/db';
 import validate from 'utils/validator';
-import checkForUrlConflicts from 'utils/url';
+import { checkForUrlConflicts, checkForMaliciousURL } from 'utils/url';
 
 export default async function handler(req, res) {
   if (req.method === 'POST') {
@@ -8,12 +8,12 @@ export default async function handler(req, res) {
     const shortCode = req.body.short_code;
 
     // Validate server input
-    const isValid = await validate(url, shortCode);
-    if (!isValid) {
+    const valid = await validate(url, shortCode);
+    if (!valid) {
       res.statusCode = 400;
       res.end(
         JSON.stringify({
-          message: 'Please enter a correct URL and Short Code',
+          message: 'Please enter a correct URL and Short Code.',
           shortCode,
         })
       );
@@ -26,14 +26,29 @@ export default async function handler(req, res) {
       res.statusCode = 400;
       res.end(
         JSON.stringify({
-          message: "You aren't permitted to redirect to this website",
+          message:
+            "We couldn't create your shortlink: You aren't allowed to create a redirect to this website.",
           shortCode,
         })
       );
       return;
     }
 
-    // If both previous checks pass, create the link
+    // Return error if URL is malicious
+    const malicious = await checkForMaliciousURL(url);
+    if (malicious) {
+      res.statusCode = 400;
+      res.end(
+        JSON.stringify({
+          message:
+            "We couldn't create your shortlink: The link you provided is untrusted and may contain malware.",
+          shortCode,
+        })
+      );
+      return;
+    }
+
+    // If all previous checks pass, create the link
     try {
       const response = await createLink(url, shortCode);
       res.statusCode = response.statusCode;
