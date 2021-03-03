@@ -3,6 +3,9 @@ import { findOne } from 'config/db';
 export default async function handler(req, res) {
   const shortCode = req.query.redirect[0];
   const result = await checkDB(shortCode);
+  console.log('Redirecting');
+  console.log('Short Code: ', shortCode);
+  console.log('DB Redirect Info: ', result);
   res.redirect(result.statusCode, result.url);
 }
 
