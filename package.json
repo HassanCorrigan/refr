@@ -17,7 +17,7 @@
   "license": "MIT",
   "dependencies": {
     "mongodb": "^3.6.4",
-    "next": "^10.0.7",
+    "next": "^10.0.6",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "yup": "^0.32.9"
