@@ -1,6 +1,8 @@
-const { MongoClient } = require('mongodb');
+import { MongoClient } from 'mongodb';
 
-// Connect to DB
+/**
+ * Connect to DB
+ */
 const dbConnect = async () => {
   // Setup DB
   const dbUri = process.env.MONGO_URL;
@@ -9,6 +11,11 @@ const dbConnect = async () => {
   return await client.connect();
 };
 
+/**
+ * Checks database for a short-code
+ * @param {string} shortCode -
+ * returns a record if the short-code exists
+ */
 const findOne = async shortCode => {
   const client = await dbConnect();
   const dbName = process.env.DB_NAME;
@@ -21,6 +28,10 @@ const findOne = async shortCode => {
   }
 };
 
+/**
+ * Add a new item to the database
+ * @param {object} record - url and shortCode
+ */
 const insertOne = async record => {
   const client = await dbConnect();
   const dbName = process.env.DB_NAME;
@@ -33,4 +44,4 @@ const insertOne = async record => {
   }
 };
 
-module.exports = { findOne, insertOne };
+export { findOne, insertOne };

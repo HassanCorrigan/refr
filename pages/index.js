@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import Layout from 'components/Layout';
-import validate from 'utils/validator';
 import { checkForUrlConflicts, checkForMaliciousURL } from 'utils/url';
+import validate from 'utils/validator';
+import Layout from 'components/Layout';
 import styles from 'styles/index.module.css';
 
 const Index = () => {
@@ -52,6 +52,12 @@ const Index = () => {
     createLink(url, short_code, e);
   };
 
+  /**
+   *
+   * @param {string} url - the url to shorten
+   * @param {string} short_code the user-selected short-code
+   * @param {event} e
+   */
   const createLink = async (url, short_code, e) => {
     try {
       const res = await fetch('/api/shorten', {
@@ -72,17 +78,25 @@ const Index = () => {
         setShortCode(null);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
 
+  /**
+   * Clears the form after a successful submit
+   * @param {event} e
+   */
   const clearForm = e => {
     e.target.url.value = '';
     e.target.short_code.value = '';
   };
 
+  /**
+   * Copys the new short-link to the clipboard
+   * @param {event} e
+   */
   const handleCopy = e => {
     const link = `${
       process.env.NEXT_PUBLIC_WEBSITE_URL

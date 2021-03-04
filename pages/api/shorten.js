@@ -1,8 +1,8 @@
 import { findOne, insertOne } from 'config/db';
-import validate from 'utils/validator';
 import { checkForUrlConflicts, checkForMaliciousURL } from 'utils/url';
+import validate from 'utils/validator';
 
-export default async function handler(req, res) {
+const handler = async (req, res) => {
   if (req.method === 'POST') {
     const url = req.body.url;
     const shortCode = req.body.short_code;
@@ -59,9 +59,14 @@ export default async function handler(req, res) {
   } else {
     res.redirect(301, '/'); // Redirect all requests other than POST
   }
-}
+};
 
-async function createLink(url, short_code) {
+/**
+ * Creates the link by adding to the database
+ * @param {string} url
+ * @param {string} short_code
+ */
+const createLink = async (url, short_code) => {
   // If no short code is supplied, generate a random one
   const shortCode = short_code || generateShortCode(4);
   const linkPair = {
@@ -89,16 +94,13 @@ async function createLink(url, short_code) {
       },
     };
   }
-}
-
-// Generate random Short Code
-function generateShortCode(length) {
-  return Math.random().toString(36).substr(2, length);
-}
-
-// Set external resolver to remove warning
-export const config = {
-  api: {
-    externalResolver: true,
-  },
 };
+
+/**
+ * Generates a random short-code based on the length paremeter
+ * @param {number} length
+ */
+const generateShortCode = length =>
+  Math.random().toString(36).substr(2, length);
+
+export default handler;
