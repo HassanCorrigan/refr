@@ -1,6 +1,7 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { findOne } from 'config/db';
 
-const handler = async (req, res) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const shortCode = req.query.redirect[0];
   const result = await checkDB(shortCode);
   res.redirect(result.statusCode, result.url);

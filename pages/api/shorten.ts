@@ -1,8 +1,9 @@
+import type { NextApiRequest, NextApiResponse } from 'next';
 import { findOne, insertOne } from 'config/db';
 import { checkForUrlConflicts, checkForMaliciousURL } from 'utils/url';
 import validate from 'utils/validator';
 
-const handler = async (req, res) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
     const url = req.body.url;
     const shortCode = req.body.short_code;
