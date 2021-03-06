@@ -1,6 +1,6 @@
 import { string, object } from 'yup';
 
-const validate = async (url, shortCode) => {
+const validate = async (url: string, shortCode: string) => {
   const schema = object().shape({
     url: string().url().min(11).max(2000).trim().required(),
     shortCode: string().max(2000).trim(),
