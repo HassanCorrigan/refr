@@ -5,7 +5,7 @@ import { MongoClient } from 'mongodb';
  */
 const dbConnect = async () => {
   // Setup DB
-  const dbUri = process.env.MONGO_URL;
+  const dbUri: string = process.env.MONGO_URL;
   const client = new MongoClient(dbUri, { useUnifiedTopology: true });
 
   return await client.connect();
@@ -16,9 +16,9 @@ const dbConnect = async () => {
  * @param {string} shortCode -
  * returns a record if the short-code exists
  */
-const findOne = async shortCode => {
+const findOne = async (shortCode: string) => {
   const client = await dbConnect();
-  const dbName = process.env.DB_NAME;
+  const dbName: string = process.env.DB_NAME;
   const links = client.db(dbName).collection('links');
 
   try {
@@ -34,7 +34,7 @@ const findOne = async shortCode => {
  */
 const insertOne = async record => {
   const client = await dbConnect();
-  const dbName = process.env.DB_NAME;
+  const dbName: string = process.env.DB_NAME;
   const links = client.db(dbName).collection('links');
 
   try {

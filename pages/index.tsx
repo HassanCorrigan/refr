@@ -15,8 +15,8 @@ const Index = () => {
 
     setLoading(true);
 
-    const url = e.target.url.value;
-    const short_code = e.target.short_code.value;
+    const url: string = e.target.url.value;
+    const short_code: string = e.target.short_code.value;
 
     // Validate client input
     const valid = await validate(url, short_code);
@@ -28,7 +28,7 @@ const Index = () => {
     }
 
     // Return error if URLs match
-    const conflicts = await checkForUrlConflicts(url);
+    const conflicts: boolean = await checkForUrlConflicts(url);
     if (conflicts) {
       setMessage(
         "We couldn't create your shortlink: You aren't allowed to create a redirect to this website."
@@ -39,7 +39,7 @@ const Index = () => {
     }
 
     // Return error if URLs is malicious
-    const malicious = await checkForMaliciousURL(url);
+    const malicious: boolean = await checkForMaliciousURL(url);
     if (malicious) {
       setMessage(
         "We couldn't create your shortlink: The link you provided is untrusted and may contain malware."
@@ -58,7 +58,7 @@ const Index = () => {
    * @param {string} short_code the user-selected short-code
    * @param {event} e
    */
-  const createLink = async (url, short_code, e) => {
+  const createLink = async (url: string, short_code: string, e) => {
     try {
       const res = await fetch('/api/shorten', {
         method: 'POST',
@@ -98,7 +98,7 @@ const Index = () => {
    * @param {event} e
    */
   const handleCopy = e => {
-    const link = `${
+    const link: string = `${
       process.env.NEXT_PUBLIC_WEBSITE_URL
     }/${shortCode.toString()}`;
 

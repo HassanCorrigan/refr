@@ -5,8 +5,8 @@ import validate from 'utils/validator';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
-    const url = req.body.url;
-    const shortCode = req.body.short_code;
+    const url: string = req.body.url;
+    const shortCode: string = req.body.short_code;
 
     // Validate server input
     const valid = await validate(url, shortCode);
@@ -22,7 +22,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     // Return error if URLs match
-    const conflicts = await checkForUrlConflicts(url);
+    const conflicts: boolean = await checkForUrlConflicts(url);
     if (conflicts) {
       res.statusCode = 400;
       res.end(
@@ -36,7 +36,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     // Return error if URL is malicious
-    const malicious = await checkForMaliciousURL(url);
+    const malicious: boolean = await checkForMaliciousURL(url);
     if (malicious) {
       res.statusCode = 400;
       res.end(
@@ -67,16 +67,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
  * @param {string} url
  * @param {string} short_code
  */
-const createLink = async (url, short_code) => {
+const createLink = async (url: string, short_code: string) => {
   // If no short code is supplied, generate a random one
-  const shortCode = short_code || generateShortCode(4);
-  const linkPair = {
+  const shortCode: string = short_code || generateShortCode(4);
+  const linkPair: object = {
     url,
     shortCode,
   };
 
   // Check if Short Code already exists
-  const alreadyExists = await findOne(shortCode);
+  const alreadyExists: boolean = await findOne(shortCode);
 
   if (alreadyExists) {
     return {
@@ -101,7 +101,7 @@ const createLink = async (url, short_code) => {
  * Generates a random short-code based on the length paremeter
  * @param {number} length
  */
-const generateShortCode = length =>
+const generateShortCode = (length: number) =>
   Math.random().toString(36).substr(2, length);
 
 export default handler;

@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { findOne } from 'config/db';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
-  const shortCode = req.query.redirect[0];
+  const shortCode: string = req.query.redirect[0];
   const result = await checkDB(shortCode);
   res.redirect(result.statusCode, result.url);
 };
@@ -13,7 +13,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
  * If it does exist, return the redirect url and status-code
  * Otherwise, return the 404 page and statuscode
  */
-const checkDB = async shortCode => {
+const checkDB = async (shortCode: string) => {
   const linkExists = await findOne(shortCode);
   if (linkExists) {
     return { statusCode: 301, url: linkExists.url };

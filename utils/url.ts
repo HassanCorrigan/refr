@@ -4,8 +4,8 @@ import { name, version } from '../package.json';
  * is equal to destination url and returns true if matches to avoid too many redirects.
  * @param {string} url
  */
-const checkForUrlConflicts = async url => {
-  const publicWebsiteURL = process.env.NEXT_PUBLIC_WEBSITE_URL;
+const checkForUrlConflicts = async (url: string) => {
+  const publicWebsiteURL: string = process.env.NEXT_PUBLIC_WEBSITE_URL;
 
   // Construct URL objects
   const source = new URL(url);
@@ -18,9 +18,10 @@ const checkForUrlConflicts = async url => {
  * Checks if a url is malicious, using Google's safe browsing API.
  * @param {string} url
  */
-const checkForMaliciousURL = async url => {
-  const baseURL = 'https://safebrowsing.googleapis.com/v4/threatMatches:find';
-  const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_SAFE_BROWSING_API_KEY;
+const checkForMaliciousURL = async (url: string) => {
+  const baseURL: string =
+    'https://safebrowsing.googleapis.com/v4/threatMatches:find';
+  const API_KEY: string = process.env.NEXT_PUBLIC_GOOGLE_SAFE_BROWSING_API_KEY;
 
   /**
    * Fetch the latest threat lists from Google
@@ -33,7 +34,7 @@ const checkForMaliciousURL = async url => {
     threatEntryTypes,
   } = await getSafeBrowsingLists();
 
-  const config = {
+  const config: object = {
     client: {
       clientId: name,
       clientVersion: version,
@@ -60,7 +61,7 @@ const checkForMaliciousURL = async url => {
      * Check if the response object contains the 'matches' key
      * return true if it does, otherwise return false;
      */
-    const isMalicious = 'matches' in data ? true : false;
+    const isMalicious: boolean = 'matches' in data ? true : false;
 
     return isMalicious;
   } catch (error) {
@@ -72,8 +73,8 @@ const checkForMaliciousURL = async url => {
  * Fetches the latest safe browsing lists from Google.
  */
 const getSafeBrowsingLists = async () => {
-  const baseURL = 'https://safebrowsing.googleapis.com/v4/threatLists';
-  const API_KEY = process.env.NEXT_PUBLIC_GOOGLE_SAFE_BROWSING_API_KEY;
+  const baseURL: string = 'https://safebrowsing.googleapis.com/v4/threatLists';
+  const API_KEY: string = process.env.NEXT_PUBLIC_GOOGLE_SAFE_BROWSING_API_KEY;
 
   try {
     const res = await fetch(`${baseURL}?key=${API_KEY}`, {
@@ -82,9 +83,11 @@ const getSafeBrowsingLists = async () => {
       },
     });
     const { threatLists } = await res.json();
-    const threatTypes = threatLists.map(item => item.threatType);
-    const platformTypes = threatLists.map(item => item.platformType);
-    const threatEntryTypes = threatLists.map(item => item.threatEntryType);
+    const threatTypes: string[] = threatLists.map(item => item.threatType);
+    const platformTypes: string[] = threatLists.map(item => item.platformType);
+    const threatEntryTypes: string[] = threatLists.map(
+      item => item.threatEntryType
+    );
 
     /** Remove duplicates with 'new Set()' and return an object containing the lists */
     return {
