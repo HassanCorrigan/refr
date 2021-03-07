@@ -22,7 +22,7 @@ const Index = () => {
     const valid = await validate(url, short_code);
     if (!valid) {
       setMessage('Please enter a valid URL');
-      setShortCode(null);
+      setShortCode('');
       setLoading(false);
       return;
     }
@@ -33,7 +33,7 @@ const Index = () => {
       setMessage(
         "We couldn't create your shortlink: You aren't allowed to create a redirect to this website."
       );
-      setShortCode(null);
+      setShortCode('');
       setLoading(false);
       return;
     }
@@ -44,7 +44,7 @@ const Index = () => {
       setMessage(
         "We couldn't create your shortlink: The link you provided is untrusted and may contain malware."
       );
-      setShortCode(null);
+      setShortCode('');
       setLoading(false);
       return;
     }
@@ -58,7 +58,11 @@ const Index = () => {
    * @param {string} short_code the user-selected short-code
    * @param {event} e
    */
-  const createLink = async (url: string, short_code: string, e) => {
+  const createLink = async (
+    url: string,
+    short_code: string,
+    e
+  ): Promise<void> => {
     try {
       const res = await fetch('/api/shorten', {
         method: 'POST',
@@ -75,7 +79,7 @@ const Index = () => {
         clearForm(e);
       } else {
         setMessage(data.message);
-        setShortCode(null);
+        setShortCode('');
       }
     } catch (error) {
       console.error(error);
@@ -88,7 +92,7 @@ const Index = () => {
    * Clears the form after a successful submit
    * @param {event} e
    */
-  const clearForm = e => {
+  const clearForm = (e): void => {
     e.target.url.value = '';
     e.target.short_code.value = '';
   };
@@ -97,7 +101,7 @@ const Index = () => {
    * Copys the new short-link to the clipboard
    * @param {event} e
    */
-  const handleCopy = e => {
+  const handleCopy = (e): void => {
     const link: string = `${
       process.env.NEXT_PUBLIC_WEBSITE_URL
     }/${shortCode.toString()}`;

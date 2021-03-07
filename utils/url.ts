@@ -4,7 +4,7 @@ import { name, version } from '../package.json';
  * is equal to destination url and returns true if matches to avoid too many redirects.
  * @param {string} url
  */
-const checkForUrlConflicts = async (url: string) => {
+const checkForUrlConflicts = (url: string): boolean => {
   const publicWebsiteURL: string = process.env.NEXT_PUBLIC_WEBSITE_URL;
 
   // Construct URL objects

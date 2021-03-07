@@ -101,7 +101,7 @@ const createLink = async (url: string, short_code: string) => {
  * Generates a random short-code based on the length paremeter
  * @param {number} length
  */
-const generateShortCode = (length: number) =>
+const generateShortCode = (length: number): string =>
   Math.random().toString(36).substr(2, length);
 
 export default handler;

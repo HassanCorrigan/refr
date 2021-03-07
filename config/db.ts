@@ -32,7 +32,7 @@ const findOne = async (shortCode: string) => {
  * Add a new item to the database
  * @param {object} record - url and shortCode
  */
-const insertOne = async record => {
+const insertOne = async (record: object) => {
   const client = await dbConnect();
   const dbName: string = process.env.DB_NAME;
   const links = client.db(dbName).collection('links');
