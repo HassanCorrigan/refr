@@ -1,25 +1,36 @@
-import { MongoClient } from 'mongodb';
+import { Collection, MongoClient } from 'mongodb';
+
+/**
+ * Typescript interfaces
+ */
+interface Record extends Collection {
+  url: string;
+  shortCode: string;
+}
 
 /**
  * Connect to DB
  */
-const dbConnect = async () => {
+const dbConnect = async (): Promise<MongoClient> => {
   // Setup DB
-  const dbUri: string = process.env.MONGO_URL;
-  const client = new MongoClient(dbUri, { useUnifiedTopology: true });
+  const dbUri: string = process.env.MONGO_URL!;
+  const client: MongoClient = new MongoClient(dbUri, {
+    useUnifiedTopology: true,
+  });
 
   return await client.connect();
 };
 
 /**
  * Checks database for a short-code
- * @param {string} shortCode -
+ * @param {string} shortCode
  * returns a record if the short-code exists
  */
-const findOne = async (shortCode: string) => {
-  const client = await dbConnect();
-  const dbName: string = process.env.DB_NAME;
-  const links = client.db(dbName).collection('links');
+const findOne = async (shortCode: string): Promise<Record> => {
+  const client: MongoClient = await dbConnect();
+
+  const dbName: string = process.env.DB_NAME!;
+  const links: Collection = client.db(dbName).collection('links');
 
   try {
     return await links.findOne({ shortCode });
@@ -32,10 +43,10 @@ const findOne = async (shortCode: string) => {
  * Add a new item to the database
  * @param {object} record - url and shortCode
  */
-const insertOne = async (record: object) => {
-  const client = await dbConnect();
-  const dbName: string = process.env.DB_NAME;
-  const links = client.db(dbName).collection('links');
+const insertOne = async (record: object): Promise<unknown> => {
+  const client: MongoClient = await dbConnect();
+  const dbName: string = process.env.DB_NAME!;
+  const links: Collection = client.db(dbName).collection('links');
 
   try {
     return await links.insertOne(record);

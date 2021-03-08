@@ -2,6 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { findOne, insertOne } from 'config/db';
 import { checkForUrlConflicts, checkForMaliciousURL } from 'utils/url';
 import validate from 'utils/validator';
+import { Collection } from 'mongodb';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
@@ -36,7 +37,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     // Return error if URL is malicious
-    const malicious: boolean = await checkForMaliciousURL(url);
+    const malicious: boolean | undefined = await checkForMaliciousURL(url);
     if (malicious) {
       res.statusCode = 400;
       res.end(
@@ -76,7 +77,7 @@ const createLink = async (url: string, short_code: string) => {
   };
 
   // Check if Short Code already exists
-  const alreadyExists: boolean = await findOne(shortCode);
+  const alreadyExists: Collection = await findOne(shortCode);
 
   if (alreadyExists) {
     return {

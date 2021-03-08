@@ -5,7 +5,7 @@ import { name, version } from '../package.json';
  * @param {string} url
  */
 const checkForUrlConflicts = (url: string): boolean => {
-  const publicWebsiteURL: string = process.env.NEXT_PUBLIC_WEBSITE_URL;
+  const publicWebsiteURL: string = process.env.NEXT_PUBLIC_WEBSITE_URL!;
 
   // Construct URL objects
   const source = new URL(url);
@@ -18,10 +18,12 @@ const checkForUrlConflicts = (url: string): boolean => {
  * Checks if a url is malicious, using Google's safe browsing API.
  * @param {string} url
  */
-const checkForMaliciousURL = async (url: string) => {
+const checkForMaliciousURL = async (
+  url: string
+): Promise<boolean | undefined> => {
   const baseURL: string =
     'https://safebrowsing.googleapis.com/v4/threatMatches:find';
-  const API_KEY: string = process.env.NEXT_PUBLIC_GOOGLE_SAFE_BROWSING_API_KEY;
+  const API_KEY: string = process.env.NEXT_PUBLIC_GOOGLE_SAFE_BROWSING_API_KEY!;
 
   /**
    * Fetch the latest threat lists from Google
@@ -74,7 +76,7 @@ const checkForMaliciousURL = async (url: string) => {
  */
 const getSafeBrowsingLists = async () => {
   const baseURL: string = 'https://safebrowsing.googleapis.com/v4/threatLists';
-  const API_KEY: string = process.env.NEXT_PUBLIC_GOOGLE_SAFE_BROWSING_API_KEY;
+  const API_KEY: string = process.env.NEXT_PUBLIC_GOOGLE_SAFE_BROWSING_API_KEY!;
 
   try {
     const res = await fetch(`${baseURL}?key=${API_KEY}`, {
