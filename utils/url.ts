@@ -85,10 +85,14 @@ const getSafeBrowsingLists = async () => {
       },
     });
     const { threatLists } = await res.json();
-    const threatTypes: string[] = threatLists.map(item => item.threatType);
-    const platformTypes: string[] = threatLists.map(item => item.platformType);
+    const threatTypes: string[] = threatLists.map(
+      (item: { threatType: string[] }) => item.threatType
+    );
+    const platformTypes: string[] = threatLists.map(
+      (item: { platformType: string[] }) => item.platformType
+    );
     const threatEntryTypes: string[] = threatLists.map(
-      item => item.threatEntryType
+      (item: { threatEntryType: string[] }) => item.threatEntryType
     );
 
     /** Remove duplicates with 'new Set()' and return an object containing the lists */

@@ -1,8 +1,9 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { findOne, insertOne } from 'config/db';
 import { checkForUrlConflicts, checkForMaliciousURL } from 'utils/url';
 import validate from 'utils/validator';
-import { Collection } from 'mongodb';
+
+import type { NextApiRequest, NextApiResponse } from 'next';
+import type { Collection } from 'mongodb';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
@@ -10,7 +11,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     const shortCode: string = req.body.short_code;
 
     // Validate server input
-    const valid = await validate(url, shortCode);
+    const valid: boolean | void = await validate(url, shortCode);
     if (!valid) {
       res.statusCode = 400;
       res.end(

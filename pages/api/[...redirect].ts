@@ -1,6 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { findOne } from 'config/db';
-import { Collection } from 'mongodb';
+
+import type { NextApiRequest, NextApiResponse } from 'next';
+import type { Collection } from 'mongodb';
 
 /**
  * Typescript interfaces

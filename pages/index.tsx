@@ -4,12 +4,14 @@ import validate from 'utils/validator';
 import Layout from 'components/Layout';
 import styles from 'styles/index.module.css';
 
+import type React from 'react';
+
 const Index = () => {
   const [shortCode, setShortCode] = useState('');
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async e => {
+  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.persist();
 
@@ -19,7 +21,7 @@ const Index = () => {
     const short_code: string = e.target.short_code.value;
 
     // Validate client input
-    const valid = await validate(url, short_code);
+    const valid: boolean | void = await validate(url, short_code);
     if (!valid) {
       setMessage('Please enter a valid URL');
       setShortCode('');
@@ -39,7 +41,7 @@ const Index = () => {
     }
 
     // Return error if URLs is malicious
-    const malicious: boolean = await checkForMaliciousURL(url);
+    const malicious: boolean | undefined = await checkForMaliciousURL(url);
     if (malicious) {
       setMessage(
         "We couldn't create your shortlink: The link you provided is untrusted and may contain malware."
@@ -61,7 +63,7 @@ const Index = () => {
   const createLink = async (
     url: string,
     short_code: string,
-    e
+    e: React.ChangeEvent<HTMLFormElement>
   ): Promise<void> => {
     try {
       const res = await fetch('/api/shorten', {
@@ -92,7 +94,7 @@ const Index = () => {
    * Clears the form after a successful submit
    * @param {event} e
    */
-  const clearForm = (e): void => {
+  const clearForm = (e: React.ChangeEvent<HTMLFormElement>): void => {
     e.target.url.value = '';
     e.target.short_code.value = '';
   };
@@ -101,16 +103,16 @@ const Index = () => {
    * Copys the new short-link to the clipboard
    * @param {event} e
    */
-  const handleCopy = (e): void => {
+  const handleCopy = (e: React.MouseEvent<HTMLImageElement>): void => {
     const link: string = `${
       process.env.NEXT_PUBLIC_WEBSITE_URL
     }/${shortCode.toString()}`;
 
     navigator.clipboard.writeText(link);
-    e.target.src = '/img/copy-success.svg';
+    (e.target as HTMLImageElement).src = '/img/copy-success.svg';
 
     setTimeout(() => {
-      e.target.src = '/img/copy-glyph.svg';
+      (e.target as HTMLImageElement).src = '/img/copy-glyph.svg';
     }, 5000);
   };
 
