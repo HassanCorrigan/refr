@@ -3,6 +3,9 @@
   font-family: 'Rubik', sans-serif;
   font-weight: 700;
 }
+.header h1 {
+  color: var(--main-color);
+}
 .logo {
   color: var(--primary-color);
 }

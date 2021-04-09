@@ -4,6 +4,7 @@
   --main-color: #2c2a30;
   --main-background-color: #edf1f5;
   --secondary-background-color: #ffffff;
+  --transparent-background-color: rgba(211, 211, 211, 0.9);
   --primary-color: #180edb;
   --border-radius: 1.2em;
   --shadow-color: #dbdee0;
@@ -36,5 +37,16 @@ a:hover {
 @media only screen and (min-width: 750px) {
   main {
     min-height: 90vh;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --main-color: #edf1f5;
+    --main-background-color: #1a1a1a;
+    --secondary-background-color: #403d47;
+    --transparent-background-color: rgba(66, 66, 66, 0.9);
+    --primary-color: #a49fff;
+    --shadow-color: #000000;
   }
 }
