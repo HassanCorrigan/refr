@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { checkForUrlConflicts, checkForMaliciousURL } from 'utils/url';
 import validate from 'utils/validator';
 import Layout from 'components/Layout';
+import Loader from 'components/Loader';
 import styles from 'styles/index.module.css';
 
 import type React from 'react';
@@ -150,11 +151,7 @@ const Index = () => {
           <input className={styles.button} type='submit' value='Shorten It' />
         </form>
 
-        {loading && (
-          <div className={styles.loading}>
-            <p>Creating Link...</p>
-          </div>
-        )}
+        {loading && <Loader />}
 
         <div className={styles.linkDetails}>
           {shortCode && (
