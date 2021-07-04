@@ -1,4 +1,4 @@
-import { name, version } from '../package.json';
+import packageJson from '../package.json';
 /**
  * To avoid redirect loop to the this site this function checks if redirect url
  * is equal to destination url and returns true if matches to avoid too many redirects.
@@ -30,16 +30,13 @@ const checkForMaliciousURL = async (
    * Returns an object with three arrays containing:
    * threatTypes, platformTypes and threatEntryTypes
    */
-  const {
-    threatTypes,
-    platformTypes,
-    threatEntryTypes,
-  } = await getSafeBrowsingLists();
+  const { threatTypes, platformTypes, threatEntryTypes } =
+    await getSafeBrowsingLists();
 
   const config: object = {
     client: {
-      clientId: name,
-      clientVersion: version,
+      clientId: packageJson.name,
+      clientVersion: packageJson.version,
     },
     threatInfo: {
       threatTypes,

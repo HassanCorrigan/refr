@@ -1,10 +1,10 @@
-import { version } from 'package.json';
+import packageJson from 'package.json';
 import styles from 'styles/footer.module.css';
 
 const Footer = () => {
   return (
     <footer className={styles.footer}>
-      <p>Refr - v{version}</p>
+      <p>Refr - v{packageJson.version}</p>
       <span>
         <a
           href='https://github.com/HassanCorrigan/refr'
