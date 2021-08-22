@@ -1,20 +1,8 @@
 import { findOne } from 'config/db';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { Collection } from 'mongodb';
-
-/**
- * Typescript interfaces
- */
-interface Record extends Collection {
-  url: string;
-  shortCode: string;
-}
-
-interface CheckDBResponse {
-  statusCode: number;
-  url: string;
-}
+import type { Record } from 'models/Record';
+import type { CheckDbResponse } from 'models/CheckDbResponse';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const shortCode: string = req.query.redirect[0];
@@ -28,7 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
  * If it does exist, return the redirect url and status-code
  * Otherwise, return the 404 page and statuscode
  */
-const checkDB = async (shortCode: string): Promise<CheckDBResponse> => {
+const checkDB = async (shortCode: string): Promise<CheckDbResponse> => {
   const linkExists: Record = await findOne(shortCode);
   if (linkExists) {
     return { statusCode: 301, url: linkExists.url };

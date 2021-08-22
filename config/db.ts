@@ -1,12 +1,5 @@
 import { Collection, MongoClient } from 'mongodb';
-
-/**
- * Typescript interfaces
- */
-interface Record extends Collection {
-  url: string;
-  shortCode: string;
-}
+import type { Record } from 'models/Record';
 
 /**
  * Connect to DB
@@ -14,9 +7,7 @@ interface Record extends Collection {
 const dbConnect = async (): Promise<MongoClient> => {
   // Setup DB
   const dbUri: string = process.env.MONGO_URL!;
-  const client: MongoClient = new MongoClient(dbUri, {
-    useUnifiedTopology: true,
-  });
+  const client: MongoClient = new MongoClient(dbUri);
 
   return await client.connect();
 };
@@ -33,7 +24,7 @@ const findOne = async (shortCode: string): Promise<Record> => {
   const links: Collection = client.db(dbName).collection('links');
 
   try {
-    return await links.findOne({ shortCode });
+    return (await links.findOne({ shortCode })) as Record;
   } finally {
     client.close();
   }

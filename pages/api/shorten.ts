@@ -3,7 +3,7 @@ import { checkForUrlConflicts, checkForMaliciousURL } from 'utils/url';
 import validate from 'utils/validator';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { Collection } from 'mongodb';
+import type { Record } from 'models/Record';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method === 'POST') {
@@ -78,7 +78,7 @@ const createLink = async (url: string, short_code: string) => {
   };
 
   // Check if Short Code already exists
-  const alreadyExists: Collection = await findOne(shortCode);
+  const alreadyExists: Record = await findOne(shortCode);
 
   if (alreadyExists) {
     return {
