@@ -1,5 +1,4 @@
-import { Collection, MongoClient } from 'mongodb';
-import type { Record } from 'models/Record';
+import { Collection, MongoClient, WithId, Document } from 'mongodb';
 
 /**
  * Connect to DB
@@ -17,14 +16,14 @@ const dbConnect = async (): Promise<MongoClient> => {
  * @param {string} shortCode
  * returns a record if the short-code exists
  */
-const findOne = async (shortCode: string): Promise<Record> => {
+const findOne = async (shortCode: string): Promise<WithId<Document>> => {
   const client: MongoClient = await dbConnect();
 
   const dbName: string = process.env.DB_NAME!;
   const links: Collection = client.db(dbName).collection('links');
 
   try {
-    return (await links.findOne({ shortCode })) as Record;
+    return await links.findOne({ shortCode });
   } finally {
     client.close();
   }

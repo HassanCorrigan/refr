@@ -1,7 +1,7 @@
 import { findOne } from 'config/db';
 
 import type { NextApiRequest, NextApiResponse } from 'next';
-import type { Record } from 'models/Record';
+import type { WithId, Document } from 'mongodb';
 import type { CheckDbResponse } from 'models/CheckDbResponse';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -17,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
  * Otherwise, return the 404 page and statuscode
  */
 const checkDB = async (shortCode: string): Promise<CheckDbResponse> => {
-  const linkExists: Record = await findOne(shortCode);
+  const linkExists: WithId<Document> = await findOne(shortCode);
   if (linkExists) {
     return { statusCode: 301, url: linkExists.url };
   } else {
