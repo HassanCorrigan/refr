@@ -58,6 +58,12 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       res.end(JSON.stringify(response.data));
     } catch (error) {
       console.error(error);
+      res.statusCode = 400;
+      res.end({
+        message:
+          "We couldn't create your shortlink: There was a problem connecting to the database.",
+        shortCode,
+      });
     }
   } else {
     res.redirect(301, '/'); // Redirect all requests other than POST
